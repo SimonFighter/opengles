@@ -11,7 +11,6 @@
 		1D60589B0D05DD56006BFB54 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 29B97316FDCFA39411CA2CEA /* main.m */; };
 		1D60589F0D05DD5A006BFB54 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D30AB110D05D00D00671497 /* Foundation.framework */; };
 		1DF5F4E00D08C38300B7A737 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DF5F4DF0D08C38300B7A737 /* UIKit.framework */; };
-		28AD733F0D9D9553002E5188 /* MainWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 28AD733E0D9D9553002E5188 /* MainWindow.xib */; };
 		28FD14FE0DC6FC130079059D /* EAGLView.m in Sources */ = {isa = PBXBuildFile; fileRef = 28FD14FD0DC6FC130079059D /* EAGLView.m */; };
 		28FD15000DC6FC520079059D /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 28FD14FF0DC6FC520079059D /* OpenGLES.framework */; };
 		28FD15080DC6FC5B0079059D /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 28FD15070DC6FC5B0079059D /* QuartzCore.framework */; };
@@ -23,6 +22,15 @@
 		8635D5CB1EB9A9840045ACAE /* tech_texture-200026-XL.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 8635D5C61EB9A9840045ACAE /* tech_texture-200026-XL.jpg */; };
 		86DA4B441EB876A8008B148A /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 86DA4B421EB876A8008B148A /* ViewController.m */; };
 		86DA4B451EB876A8008B148A /* ViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 86DA4B431EB876A8008B148A /* ViewController.xib */; };
+		86F1F0141EC17BF3006E3EE2 /* bamboo.png in Resources */ = {isa = PBXBuildFile; fileRef = 86F1F00E1EC17BF3006E3EE2 /* bamboo.png */; };
+		86F1F0151EC17BF3006E3EE2 /* flowers.png in Resources */ = {isa = PBXBuildFile; fileRef = 86F1F00F1EC17BF3006E3EE2 /* flowers.png */; };
+		86F1F0161EC17BF3006E3EE2 /* grass.png in Resources */ = {isa = PBXBuildFile; fileRef = 86F1F0101EC17BF3006E3EE2 /* grass.png */; };
+		86F1F0171EC17BF3006E3EE2 /* lino.png in Resources */ = {isa = PBXBuildFile; fileRef = 86F1F0111EC17BF3006E3EE2 /* lino.png */; };
+		86F1F0181EC17BF3006E3EE2 /* metal.png in Resources */ = {isa = PBXBuildFile; fileRef = 86F1F0121EC17BF3006E3EE2 /* metal.png */; };
+		86F1F0191EC17BF3006E3EE2 /* schematic.png in Resources */ = {isa = PBXBuildFile; fileRef = 86F1F0131EC17BF3006E3EE2 /* schematic.png */; };
+		86F1F0221EC1AED9006E3EE2 /* bluetex.png in Resources */ = {isa = PBXBuildFile; fileRef = 86F1F01F1EC1AED9006E3EE2 /* bluetex.png */; };
+		86F1F0231EC1AED9006E3EE2 /* combinedtextures.png in Resources */ = {isa = PBXBuildFile; fileRef = 86F1F0201EC1AED9006E3EE2 /* combinedtextures.png */; };
+		86F1F0241EC1AED9006E3EE2 /* romo.png in Resources */ = {isa = PBXBuildFile; fileRef = 86F1F0211EC1AED9006E3EE2 /* romo.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -31,7 +39,6 @@
 		1D3623250D0F684500981E51 /* AppleCoder_OpenGLES_00AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppleCoder_OpenGLES_00AppDelegate.m; sourceTree = "<group>"; };
 		1D6058910D05DD3D006BFB54 /* AppleCoder-OpenGLES-00.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "AppleCoder-OpenGLES-00.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		1DF5F4DF0D08C38300B7A737 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
-		28AD733E0D9D9553002E5188 /* MainWindow.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MainWindow.xib; sourceTree = "<group>"; };
 		28FD14FC0DC6FC130079059D /* EAGLView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EAGLView.h; sourceTree = "<group>"; };
 		28FD14FD0DC6FC130079059D /* EAGLView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EAGLView.m; sourceTree = "<group>"; };
 		28FD14FF0DC6FC520079059D /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
@@ -47,6 +54,15 @@
 		86DA4B411EB876A8008B148A /* ViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
 		86DA4B421EB876A8008B148A /* ViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
 		86DA4B431EB876A8008B148A /* ViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ViewController.xib; sourceTree = "<group>"; };
+		86F1F00E1EC17BF3006E3EE2 /* bamboo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bamboo.png; sourceTree = "<group>"; };
+		86F1F00F1EC17BF3006E3EE2 /* flowers.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = flowers.png; sourceTree = "<group>"; };
+		86F1F0101EC17BF3006E3EE2 /* grass.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = grass.png; sourceTree = "<group>"; };
+		86F1F0111EC17BF3006E3EE2 /* lino.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = lino.png; sourceTree = "<group>"; };
+		86F1F0121EC17BF3006E3EE2 /* metal.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = metal.png; sourceTree = "<group>"; };
+		86F1F0131EC17BF3006E3EE2 /* schematic.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = schematic.png; sourceTree = "<group>"; };
+		86F1F01F1EC1AED9006E3EE2 /* bluetex.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bluetex.png; sourceTree = "<group>"; };
+		86F1F0201EC1AED9006E3EE2 /* combinedtextures.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = combinedtextures.png; sourceTree = "<group>"; };
+		86F1F0211EC1AED9006E3EE2 /* romo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = romo.png; sourceTree = "<group>"; };
 		8D1107310486CEB800E47090 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -112,12 +128,20 @@
 		29B97317FDCFA39411CA2CEA /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				86F1F01F1EC1AED9006E3EE2 /* bluetex.png */,
+				86F1F0201EC1AED9006E3EE2 /* combinedtextures.png */,
+				86F1F0211EC1AED9006E3EE2 /* romo.png */,
+				86F1F00E1EC17BF3006E3EE2 /* bamboo.png */,
+				86F1F00F1EC17BF3006E3EE2 /* flowers.png */,
+				86F1F0101EC17BF3006E3EE2 /* grass.png */,
+				86F1F0111EC17BF3006E3EE2 /* lino.png */,
+				86F1F0121EC17BF3006E3EE2 /* metal.png */,
+				86F1F0131EC17BF3006E3EE2 /* schematic.png */,
 				8635D5C21EB9A9840045ACAE /* checkerplate.jpg */,
 				8635D5C31EB9A9840045ACAE /* checkerplate.png */,
 				8635D5C41EB9A9840045ACAE /* checkerplate2k.jp2 */,
 				8635D5C51EB9A9840045ACAE /* H05.png */,
 				8635D5C61EB9A9840045ACAE /* tech_texture-200026-XL.jpg */,
-				28AD733E0D9D9553002E5188 /* MainWindow.xib */,
 				8D1107310486CEB800E47090 /* Info.plist */,
 			);
 			name = Resources;
@@ -183,13 +207,21 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				86F1F0151EC17BF3006E3EE2 /* flowers.png in Resources */,
+				86F1F0171EC17BF3006E3EE2 /* lino.png in Resources */,
 				8635D5C71EB9A9840045ACAE /* checkerplate.jpg in Resources */,
 				86DA4B451EB876A8008B148A /* ViewController.xib in Resources */,
+				86F1F0161EC17BF3006E3EE2 /* grass.png in Resources */,
+				86F1F0191EC17BF3006E3EE2 /* schematic.png in Resources */,
 				8635D5CB1EB9A9840045ACAE /* tech_texture-200026-XL.jpg in Resources */,
+				86F1F0221EC1AED9006E3EE2 /* bluetex.png in Resources */,
+				86F1F0231EC1AED9006E3EE2 /* combinedtextures.png in Resources */,
 				8635D5C91EB9A9840045ACAE /* checkerplate2k.jp2 in Resources */,
+				86F1F0141EC17BF3006E3EE2 /* bamboo.png in Resources */,
+				86F1F0241EC1AED9006E3EE2 /* romo.png in Resources */,
 				8635D5CA1EB9A9840045ACAE /* H05.png in Resources */,
 				8635D5C81EB9A9840045ACAE /* checkerplate.png in Resources */,
-				28AD733F0D9D9553002E5188 /* MainWindow.xib in Resources */,
+				86F1F0181EC17BF3006E3EE2 /* metal.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -19,7 +19,7 @@
 // A class extension to declare private methods
 @interface EAGLView (){
     GLfloat rota;
-    GLuint textures[1];
+    GLuint textures[10];
 
 }
 
@@ -83,12 +83,71 @@
     
     animationInterval = 1.0 / 60.0;
     rota = 0.0;
+    glGenTextures(6, &textures[0]);
 
     [self setupView];
-    [self loadTexture];
-
+    //[self loadTexture];
+//    glGenTextures(6, &textures[0]);
+//    [self loadTexture:@"bamboo.png" intoLocation:textures[0]];
+//    [self loadTexture:@"flowers.png" intoLocation:textures[1]];
+//    [self loadTexture:@"grass.png" intoLocation:textures[2]];
+//    [self loadTexture:@"lino.png" intoLocation:textures[3]];
+//    [self loadTexture:@"metal.png" intoLocation:textures[4]];
+//    [self loadTexture:@"schematic.png" intoLocation:textures[5]];
+    
+    
+    glGenTextures(10, &textures[0]);
+    [self loadTexture:@"combinedtextures.png" intoLocation:textures[0]];
+    [self loadTexture:@"bluetex.png" intoLocation:textures[1]];
+    [self loadTexture:@"romo.png" intoLocation:textures[2]];
+    
+    // Render to Texture texture buffer setup
+    glBindTexture(GL_TEXTURE_2D, textures[3]);
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, 128, 128, 0, GL_RGBA, GL_UNSIGNED_BYTE, nil);
+    glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+    glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+    
     return YES;
 }
+
+- (void)loadTexture:(NSString *)name intoLocation:(GLuint)location {
+    
+    CGImageRef textureImage = [UIImage imageNamed:name].CGImage;
+    if (textureImage == nil) {
+        NSLog(@"Failed to load texture image");
+        return;
+    }
+    
+    NSInteger texWidth = CGImageGetWidth(textureImage);
+    NSInteger texHeight = CGImageGetHeight(textureImage);
+    
+    GLubyte *textureData = (GLubyte *)malloc(texWidth * texHeight * 4);
+    
+    CGContextRef textureContext = CGBitmapContextCreate(textureData,
+                                                        texWidth, texHeight,
+                                                        8, texWidth * 4,
+                                                        CGImageGetColorSpace(textureImage),
+                                                        kCGImageAlphaPremultipliedLast);
+    
+    
+    // Rotate the image
+    CGContextTranslateCTM(textureContext, 0, texHeight);
+    CGContextScaleCTM(textureContext, 1.0, -1.0);
+    
+    
+    CGContextDrawImage(textureContext, CGRectMake(0.0, 0.0, (float)texWidth, (float)texHeight), textureImage);
+    CGContextRelease(textureContext);
+    
+    glBindTexture(GL_TEXTURE_2D, location);
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, texWidth, texHeight, 0, GL_RGBA, GL_UNSIGNED_BYTE, textureData);
+    
+    free(textureData);
+    
+    glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+    glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+    glEnable(GL_TEXTURE_2D);
+}
+
 
 -(void)loadTexture{
     CGImageRef textureImage = [UIImage imageNamed:@"checkerplate"].CGImage;
@@ -157,10 +216,10 @@
     
    const GLshort squareTextureCoords[] = {
         // Front face
-        0, 1,       // top left
+        0, 2,       // top left
         0, 0,       // bottom left
-        1, 0,       // bottom right
-        1, 1,       // top right
+        2, 0,       // bottom right
+        2, 2,       // top right
 
         // Top face
         0, 1,       // top left
@@ -266,15 +325,15 @@
     
     
     const GLfloat blendRectangle[] = {
-        1.0, 1.0, -2.0,
-        -1.0, 1.0, -2.0,
-        -1.0, -1.0, -2.0,
-        1.0, -1.0, -2.0
+        2.0, 1.0, 0.0,
+        -2.0, 1.0, 0.0,
+        -2.0, -1.0, 0.0,
+        2.0, -1.0, 0.0
     };
     
     rota += 0.5;
     //glShadeModel(GL_FLAT);
-    glColor4f(0.0, 0.0, 1.0, 1.0);
+    //glColor4f(0.0, 0.0, 1.0, 1.0);
 
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     glMatrixMode(GL_MODELVIEW);
@@ -310,96 +369,278 @@
     
     
     
-    glPushMatrix();
-    {
-        glTranslatef(-2.0, 0.0, -8.0);
-        //glRotatef(rota, 1.0, 0.0, 0.0);
-        glVertexPointer(3, GL_FLOAT, 0, pyramidVertices);
-        glEnableClientState(GL_VERTEX_ARRAY);
-        
-        // Draw the pyramid
-        // Draw the base -- it's a square remember
-        glColor4f(1.0, 0.0, 0.0, 1.0);
-        glDrawArrays(GL_TRIANGLE_FAN, 0, 4);
-        
-        // Front Face
-        glColor4f(0.0, 1.0, 0.0, 1.0);
-        glDrawArrays(GL_TRIANGLES, 4, 3);
-        // Rear Face
-        glColor4f(0.0, 0.0, 1.0, 1.0);
-        glDrawArrays(GL_TRIANGLES, 7, 3);
-        
-        // Right Face
-        glColor4f(1.0, 1.0, 0.0, 1.0);
-        glDrawArrays(GL_TRIANGLES, 10, 3);
-        
-        // Left Face
-        glColor4f(1.0, 0.0, 1.0, 1.0);
-        glDrawArrays(GL_TRIANGLES, 13, 3);
-    }
-    glPopMatrix();
+//    glPushMatrix();
+//    {
+//        glTranslatef(-2.0, 0.0, -8.0);
+//        //glRotatef(rota, 1.0, 0.0, 0.0);
+//        glVertexPointer(3, GL_FLOAT, 0, pyramidVertices);
+//        glEnableClientState(GL_VERTEX_ARRAY);
+//        
+//        // Draw the pyramid
+//        // Draw the base -- it's a square remember
+//        glColor4f(1.0, 0.0, 0.0, 1.0);
+//        glDrawArrays(GL_TRIANGLE_FAN, 0, 4);
+//        
+//        // Front Face
+//        glColor4f(0.0, 1.0, 0.0, 1.0);
+//        glDrawArrays(GL_TRIANGLES, 4, 3);
+//        // Rear Face
+//        glColor4f(0.0, 0.0, 1.0, 1.0);
+//        glDrawArrays(GL_TRIANGLES, 7, 3);
+//        
+//        // Right Face
+//        glColor4f(1.0, 1.0, 0.0, 1.0);
+//        glDrawArrays(GL_TRIANGLES, 10, 3);
+//        
+//        // Left Face
+//        glColor4f(1.0, 0.0, 1.0, 1.0);
+//        glDrawArrays(GL_TRIANGLES, 13, 3);
+//    }
+//    glPopMatrix();
 
     
     
-    glPushMatrix();
-    {
-    glTranslatef(2.0, 0.0, -8.0);
-    glVertexPointer(3, GL_FLOAT, 0, cubeVertices);
-    glEnableClientState(GL_VERTEX_ARRAY);
-    //glRotatef(rota, 1.0, 1.0, 1.0);
+//    glPushMatrix();
+//    {
+//    glTranslatef(0.0, 0.0, -8.0);
+//    glVertexPointer(3, GL_FLOAT, 0, cubeVertices);
+//    glEnableClientState(GL_VERTEX_ARRAY);
+//    glRotatef(rota, 1.0, 1.0, 1.0);
 
     
     // Draw the front face in Red
-    glColor4f(1.0, 0.0, 0.0, 1.0);
-    glDrawArrays(GL_TRIANGLE_FAN, 0, 4);
+//    glColor4f(1.0, 0.0, 0.0, 1.0);
+//    glDrawArrays(GL_TRIANGLE_FAN, 0, 4);
+//    
+//    // Draw the top face in green
+//    glColor4f(0.0, 1.0, 0.0, 1.0);
+//    glDrawArrays(GL_TRIANGLE_FAN, 4, 4);
+//    
+//    
+//    // Draw the rear face in Blue
+//    glColor4f(0.0, 0.0, 1.0, 1.0);
+//    glDrawArrays(GL_TRIANGLE_FAN, 8, 4);
+//    
+//    // Draw the bottom face
+//    glColor4f(1.0, 1.0, 0.0, 1.0);
+//    glDrawArrays(GL_TRIANGLE_FAN, 12, 4);
+//    
+//    // Draw the left face
+//    glColor4f(0.0, 1.0, 1.0, 1.0);
+//    glDrawArrays(GL_TRIANGLE_FAN, 16, 4);
+//    
+//    // Draw the right face
+//    glColor4f(1.0, 0.0, 1.0, 1.0);
+//    glDrawArrays(GL_TRIANGLE_FAN, 20, 4);
+        
+        // Draw the front face
+        glBindTexture(GL_TEXTURE_2D, textures[0]);
+//        glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+//        glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+//        glDrawArrays(GL_TRIANGLE_FAN, 0, 4);
+//        
+//        // Draw the top face
+//        glBindTexture(GL_TEXTURE_2D, textures[1]);
+//        glDrawArrays(GL_TRIANGLE_FAN, 4, 4);
+//        
+//        // Draw the rear face
+//        glBindTexture(GL_TEXTURE_2D, textures[2]);
+//        glDrawArrays(GL_TRIANGLE_FAN, 8, 4);
+//        
+//        // Draw the bottom face
+//        glBindTexture(GL_TEXTURE_2D, textures[3]);
+//        glDrawArrays(GL_TRIANGLE_FAN, 12, 4);
+//        
+//        // Draw the left face
+//        glBindTexture(GL_TEXTURE_2D, textures[4]);
+//        glDrawArrays(GL_TRIANGLE_FAN, 16, 4);
+//        
+//        // Draw the right face
+//        glBindTexture(GL_TEXTURE_2D, textures[5]);
+//        glDrawArrays(GL_TRIANGLE_FAN, 20, 4);
+//
+//    }
+//    glPopMatrix();
+//    
+//    
+//    glDisableClientState(GL_TEXTURE_COORD_ARRAY);
+//    glEnable(GL_BLEND);
+//    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+//
+//    glPushMatrix();
+//    {
+//        glTranslatef(0.0, 1.0, -4.0);
+//        glVertexPointer(3, GL_FLOAT, 0, blendRectangle);
+//        glEnableClientState(GL_VERTEX_ARRAY);
+//        glColor4f(1.0, 0.0, 0.0, 0.4);
+//        glDrawArrays(GL_TRIANGLE_FAN, 0, 4);
+//    }
+//    glPopMatrix();
+//    
+//    glPushMatrix();
+//    {
+//        glTranslatef(0.0, -1.0, -4.0);
+//        glColor4f(1.0, 1.0, 0.0, 0.4);
+//        glDrawArrays(GL_TRIANGLE_FAN, 0, 4);
+//    }
+//    glPopMatrix();
+//    glDisable(GL_BLEND);
     
-    // Draw the top face in green
-    glColor4f(0.0, 1.0, 0.0, 1.0);
-    glDrawArrays(GL_TRIANGLE_FAN, 4, 4);
     
     
-    // Draw the rear face in Blue
-    glColor4f(0.0, 0.0, 1.0, 1.0);
-    glDrawArrays(GL_TRIANGLE_FAN, 8, 4);
+#define WOOD_TC_OFFSET  0
+#define BRICK_TC_OFFSET 8
+#define FLOOR_TC_OFFSET 16
+#define CEILING_TC_OFFSET 24
     
-    // Draw the bottom face
-    glColor4f(1.0, 1.0, 0.0, 1.0);
-    glDrawArrays(GL_TRIANGLE_FAN, 12, 4);
+    const GLfloat combinedTextureCoordinate[] = {
+        // The wood wall texture
+        0.0, 1.0,       // Vertex[0~2] top left of square
+        0.0, 0.5,       // Vertex[3~5] bottom left of square
+        0.5, 0.5,       // Vertex[6~8] bottom right of square
+        0.5, 1.0,       // Vertex[9~11] top right of square
+        
+        // The brick texture
+        0.5, 1.0,
+        0.5, 0.5,
+        1.0, 0.5,
+        1.0, 1.0,
+        
+        // Floor texture
+        0.0, 0.5,
+        0.0, 0.0,
+        0.5, 0.0,
+        0.5, 0.5,
+        
+        // Ceiling texture
+        0.5, 0.5,
+        0.5, 0.0,
+        1.0, 0.0,
+        1.0, 0.5
+    };
     
-    // Draw the left face
-    glColor4f(0.0, 1.0, 1.0, 1.0);
-    glDrawArrays(GL_TRIANGLE_FAN, 16, 4);
+    const GLfloat elementVerticies[] = {
+        -1.0, 1.0, 0.0,     // Top left
+        -1.0, -1.0, 0.0,    // Bottom left
+        1.0, -1.0, 0.0,     // Bottom right
+        1.0, 1.0, 0.0       // Top right
+    };
     
-    // Draw the right face
-    glColor4f(1.0, 0.0, 1.0, 1.0);
-    glDrawArrays(GL_TRIANGLE_FAN, 20, 4);
+    [EAGLContext setCurrentContext:context];
+    
+    glBindFramebufferOES(GL_FRAMEBUFFER_OES, viewFramebuffer);
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    glMatrixMode(GL_MODELVIEW);
+    
+    glBindTexture(GL_TEXTURE_2D, textures[0]);
+    glVertexPointer(3, GL_FLOAT, 0, elementVerticies);
+    glEnableClientState(GL_VERTEX_ARRAY);
+    glEnable(GL_TEXTURE_2D);
+    glEnableClientState(GL_TEXTURE_COORD_ARRAY);
+    
+    // Draw the Floor
+    // First, point the texture co-ordinate engine at the right offset
+    glTexCoordPointer(2, GL_FLOAT, 0, &combinedTextureCoordinate[FLOOR_TC_OFFSET]);
+    for (int i = 0; i < 5; i++) {
+        glPushMatrix();
+        {
+            glTranslatef(-1.0, -1.0, -2.0+(i*-2.0));
+            glRotatef(-90.0, 1.0, 0.0, 0.0);
+            glDrawArrays(GL_TRIANGLE_FAN, 0, 4);
+        }
+        glPopMatrix();
+        
+        glPushMatrix();
+        {
+            glTranslatef(1.0, -1.0, -2.0+(i*-2.0));
+            glRotatef(-90.0, 1.0, 0.0, 0.0);
+            glDrawArrays(GL_TRIANGLE_FAN, 0, 4);
+        }
+        glPopMatrix();
     }
-    glPopMatrix();
     
-    
-    glDisableClientState(GL_TEXTURE_COORD_ARRAY);
-    glEnable(GL_BLEND);
-    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+    // Draw the walls
+    // This time we'll change the texture coordinate array during the drawing
+//    for (int i = 0; i < 5; i++) {
+//        glPushMatrix();
+//        {
+//            glTexCoordPointer(2, GL_FLOAT, 0, &combinedTextureCoordinate[BRICK_TC_OFFSET]);
+//            glTranslatef(-1.0, 0.0, -2.0+(i*-2.0));
+//            glRotatef(-90.0, 0.0, 1.0, 0.0);
+//            glDrawArrays(GL_TRIANGLE_FAN, 0, 4);
+//        }
+//        glPopMatrix();
+//        
+//        glPushMatrix();
+//        {
+//            glTexCoordPointer(2, GL_FLOAT, 0, &combinedTextureCoordinate[WOOD_TC_OFFSET]);
+//            glTranslatef(1.0, 0.0, -2.0+(i*-2.0));
+//            glRotatef(-90.0, 0.0, 1.0, 0.0);
+//            glDrawArrays(GL_TRIANGLE_FAN, 0, 4);
+//        }
+//        glPopMatrix();
+//    }
+//    
+//    // Draw the ceiling
+//    // Start by setting the texture coordinate pointer
+//    glTexCoordPointer(2, GL_FLOAT, 0, &combinedTextureCoordinate[CEILING_TC_OFFSET]);
+//    for (int i = 0; i < 5; i++) {
+//        glPushMatrix();
+//        {
+//            glTranslatef(-1.0, 1.0, -2.0+(i*-2.0));
+//            glRotatef(90.0, 1.0, 0.0, 0.0);
+//            glDrawArrays(GL_TRIANGLE_FAN, 0, 4);
+//        }
+//        glPopMatrix();
+//        glPushMatrix();
+//        {
+//            glTranslatef(1.0, 1.0, -2.0+(i*-2.0));
+//            glRotatef(90.0, 1.0, 0.0, 0.0);
+//            glDrawArrays(GL_TRIANGLE_FAN, 0, 4);
+//        }
+//        glPopMatrix();
+//    }
+//    
+//    
+//    ///////////////
+//    // Render to Texture section
+//    
+//    const GLfloat standardTextureCoordinates[] = {
+//        0.0, 1.0,
+//        0.0, 0.0,
+//        1.0, 0.0,
+//        1.0, 1.0
+//    };
+//    // Draw the Blue texture & Blend #9 in front
+//    glTexCoordPointer(2, GL_FLOAT, 0, standardTextureCoordinates);
+//    glPushMatrix();
+//    {
+//        glBindTexture(GL_TEXTURE_2D, textures[1]);
+//        glTranslatef(0.0, 0.0, -6.0);
+//        glDrawArrays(GL_TRIANGLE_FAN, 0, 4);
+//        glBindTexture(GL_TEXTURE_2D, textures[2]);
+//        glEnable(GL_BLEND);
+//        glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+//        glTranslatef(0.0, 0.0, 0.1);
+//        glDrawArrays(GL_TRIANGLE_FAN, 0, 4);
+//        glDisable(GL_BLEND);
+//        
+//    }
+//    glPopMatrix();
+//    
+//    // Now do the render to texture operation
+//    // First copy the section of the display and then draw it back on
+//    glLoadIdentity();
+//    glBindTexture(GL_TEXTURE_2D, textures[3]);
+//    glCopyTexSubImage2D(GL_TEXTURE_2D, 0, 0, 0, 100, 150, 128, 128);
+//    glPushMatrix();
+//    {
+//        glTranslatef(0.0, -1.0, -2.0);
+//        //		glRotatef(-75.0, 1.0, 0.0, 0.0);
+//        glDrawArrays(GL_TRIANGLE_FAN, 0, 4);
+//    }
+//    glPopMatrix();
 
-    glPushMatrix();
-    {
-        glTranslatef(0.0, 1.0, -4.0);
-        glVertexPointer(3, GL_FLOAT, 0, blendRectangle);
-        glEnableClientState(GL_VERTEX_ARRAY);
-        glColor4f(1.0, 0.0, 0.0, 0.4);
-        glDrawArrays(GL_TRIANGLE_FAN, 0, 4);
-    }
-    glPopMatrix();
-    
-    glPushMatrix();
-    {
-        glTranslatef(0.0, -1.0, -4.0);
-        glColor4f(1.0, 1.0, 0.0, 0.4);
-        glDrawArrays(GL_TRIANGLE_FAN, 0, 4);
-    }
-    glPopMatrix();
-    glDisable(GL_BLEND);
-    
 
     glBindRenderbufferOES(GL_RENDERBUFFER_OES, viewRenderbuffer);
     [context presentRenderbuffer:GL_RENDERBUFFER_OES];
